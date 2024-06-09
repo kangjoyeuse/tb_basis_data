@@ -29,9 +29,7 @@ include './config/app.php';
                 data-bs-theme="dark"
             >
                 <div class="container">
-                    <a
-                        class="navbar-brand"
-                        href="../TB%20Basis%20Data/index.php"
+                    <a class="navbar-brand" href="../tb-basis-data/index.php"
                         >CRUD PHP</a
                     >
                     <button
@@ -55,6 +53,9 @@ include './config/app.php';
                                 aria-current="page"
                                 href="./index.php"
                                 >Laporan</a
+                            >
+                            <a href="crudModal.php" class="nav-link active"
+                                >Akun</a
                             >
                             <a href="./logout.php" class="nav-link active"
                                 >Log Out</a

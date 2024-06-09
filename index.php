@@ -1,11 +1,4 @@
-<!-- Login Session -->
-<?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
-?>
+
 
 <?php
     include 'layout/header.php';
@@ -39,7 +32,7 @@ if (!isset($_SESSION['user_id'])) {
                         <td><?= $laporan["keterangan"]?></td>
                         <td><?= date("d/m/y", strtotime($laporan["tanggal"]))?></td>
                         <td>
-                            <a href="./formUbah.php?id_laporan=<?= $laporan["id_laporan"]; ?>" class="btn btn-warning btn-sm">Ubah</a>
+                            <a href="./formUbah.php?id_laporan=<?= $laporan["id_laporan"]; ?>" class="btn btn-success btn-sm">Ubah</a>
                             <a href="./formHapus.php?id_laporan=<?= $laporan["id_laporan"]; ?>" class="btn btn-danger  btn-sm">Hapus</a>
                         </td>
                     </tr>
