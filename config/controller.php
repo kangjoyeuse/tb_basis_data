@@ -11,16 +11,17 @@ function select($query) {
   return $data;
 }
 
-// Menambah data barang
-function create_barang($post) {
+// Menambah data laporan
+function create_laporan($post) {
   global $mysqli;
-  $nama = $post["nama"];
-  $jumlah = $post["jumlah"];
-  $harga = $post["harga"];
-  // $tanggal = date("Y-m-d H:i:s");
+  $nama_program = $post["nama_program"];
+  $anggaran = $post["anggaran"];
+  $realisasi_anggaran = $post["realisasi_anggaran"];
+  $rasio_realisasi_anggaran = $post["rasio_realisasi_anggaran"];
+  $keterangan = $post["keterangan"];
 
   // Query tambah data
-  $query = "INSERT INTO barang (nama, jumlah, harga, tanggal) VALUES ('$nama', '$jumlah', '$harga', CURRENT_TIMESTAMP())";
+  $query = "INSERT INTO laporan (nama_program, anggaran, realisasi_anggaran, rasio_realisasi_anggaran, keterangan, tanggal) VALUES ('$nama_program', '$anggaran', '$realisasi_anggaran', '$rasio_realisasi_anggaran', '$keterangan', CURRENT_TIMESTAMP())";
 
   // Eksekusi query
   mysqli_query($mysqli, $query);
@@ -28,17 +29,18 @@ function create_barang($post) {
   return mysqli_affected_rows($mysqli);
 }
 
-// Mengubah data barang
-function ubah_barang($post) {
+// Mengubah data laporan
+function ubah_laporan($post) {
   global $mysqli;
-  $id_barang = $post["id_barang"];
-  $nama = $post["nama"];
-  $jumlah = $post["jumlah"];
-  $harga = $post["harga"];
-  // $tanggal = date("Y-m-d H:i:s");
+  $id_laporan = $post["id_laporan"];
+  $nama_program = $post["nama_program"];
+  $anggaran = $post["anggaran"];
+  $realisasi_anggaran = $post["realisasi_anggaran"];
+  $rasio_realisasi_anggaran = $post["rasio_realisasi_anggaran"];
+  $keterangan = $post["keterangan"];
 
   // Query ubah data
-  $query = "UPDATE barang SET nama = '$nama', jumlah = '$jumlah', harga = '$harga' WHERE id_barang = $id_barang";
+  $query = "UPDATE laporan SET nama_program = '$nama_program', anggaran = '$anggaran', realisasi_anggaran = '$realisasi_anggaran', rasio_realisasi_anggaran = '$rasio_realisasi_anggaran', keterangan = '$keterangan' WHERE id_laporan = $id_laporan";
 
   // Eksekusi query
   mysqli_query($mysqli, $query);
@@ -46,14 +48,14 @@ function ubah_barang($post) {
   return mysqli_affected_rows($mysqli);
 }
 
-function delete_barang($id_barang) {
+function delete_laporan($id_laporan) {
   global $mysqli;
 
   // Query hapus data
-  $query = "DELETE FROM barang WHERE id_barang = $id_barang";
+  $query = "DELETE FROM laporan WHERE id_laporan = $id_laporan";
 
   return mysqli_query($mysqli, $query);
-} 
+}
 
 function create_akun($post) {
   global $mysqli;
