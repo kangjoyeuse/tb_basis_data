@@ -55,13 +55,11 @@ include './config/app.php';
                         <div class="navbar-nav">
                             <a
                                 class="nav-link active"
-                                aria-current="page"
+                                   aria-current="page"
                                 href="./index.php"
                                 >Laporan</a
                             >
-                            <a href="crudModal.php" class="nav-link active"
-                                >Akun</a
-                            >
+                            <a href="crudModal.php" class="nav-link active">Akun</a>
                             <a href="./logout.php" class="nav-link active"
                                 >Log Out</a
                             >

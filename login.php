@@ -1,3 +1,34 @@
+<?php
+session_start();
+include 'config/app.php';
+
+if (isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Query untuk memeriksa kredensial pengguna
+    $query = "SELECT * FROM akun WHERE username = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    if ($user && $password == $user['password']) {
+        // Set session
+        $_SESSION['user_id'] = $user['id_akun'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['level'] = $user['level'];
+
+        // Redirect ke halaman dashboard
+        header("Location: index.php");
+        exit;
+    } else {
+        $error = "Username atau password salah.";
+    }
+}
+?>
+
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
   <head><script src="./assets/js/color-modes.js"></script>
@@ -158,27 +189,28 @@
 
     
 <main class="form-signin w-100 m-auto">
-  <form>
-    <h1 class="h3 mb-3 fw-normal text-center">Admin Login</h1>
-
-    <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
-      <label for="floatingInput">Username</label>
-    </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-
-    <div class="form-check text-start my-3">
-      <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" required>
-      <label class="form-check-label" for="flexCheckDefault">
-        Remember me
-      </label>
-    </div>
-    <button class="btn btn-primary w-100 py-2 text-center" type="submit">Login</button>
-    <p class="mt-5 mb-3 text-body-secondary text-center">&copy; forcoder <?= date("Y") ?></p>
-  </form>
+        <form method="POST" action="">
+            <h1 class="h3 mb-3 fw-normal text-center">Admin Login</h1>
+            <?php if (isset($error)): ?>
+                <div class="alert alert-danger text-center"><?= $error ?></div>
+            <?php endif; ?>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInput" name="username" placeholder="name@example.com" required>
+                <label for="floatingInput">Username</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password" required>
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-check text-start my-3">
+                <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Remember me
+                </label>
+            </div>
+            <button class="btn btn-primary w-100 py-2 text-center" type="submit" name="login">Login</button>
+            <p class="mt-5 mb-3 text-body-secondary text-center">&copy; forcoder <?= date("Y") ?></p>
+        </form>
 </main>
 
 <!-- Bootstrap JavaScript -->
