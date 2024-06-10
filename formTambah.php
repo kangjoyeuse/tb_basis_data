@@ -57,18 +57,6 @@ if (isset($_POST["submit"])) {
             />
         </div>
         <div class="form-group mt-3">
-            <label for="rasio_realisasi_anggaran">Rasio Realisasi Anggaran</label>
-            <input
-                type="number"
-                step="0.01"
-                class="form-control"
-                id="rasio_realisasi_anggaran"
-                name="rasio_realisasi_anggaran"
-                placeholder="Rasio Realisasi Anggaran..."
-                required
-            />
-        </div>
-        <div class="form-group mt-3">
             <label for="keterangan">Keterangan</label>
             <textarea
                 class="form-control"

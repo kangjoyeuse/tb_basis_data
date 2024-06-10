@@ -1,4 +1,3 @@
-
 <?php include 'layout/header.php';
 
 $id_laporan = (int)$_GET["id_laporan"];
@@ -60,19 +59,6 @@ if (isset($_POST["submit"])) {
                 name="realisasi_anggaran"
                 placeholder="Realisasi Anggaran..."
                 value="<?= $laporan["realisasi_anggaran"]?>"
-                required
-            />
-        </div>
-        <div class="form-group mt-3">
-            <label for="rasio_realisasi_anggaran">Rasio Realisasi Anggaran</label>
-            <input
-                type="number"
-                step="0.01"
-                class="form-control"
-                id="rasio_realisasi_anggaran"
-                name="rasio_realisasi_anggaran"
-                placeholder="Rasio Realisasi Anggaran..."
-                value="<?= $laporan["rasio_realisasi_anggaran"]?>"
                 required
             />
         </div>

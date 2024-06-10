@@ -21,6 +21,11 @@ include './config/app.php';
             type="text/css"
             href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css"
         />
+
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <header>

@@ -57,22 +57,22 @@
         id="table"
     >
         <thead>
-            <th>No</th>
-            <th>Nama</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Aksi</th>
+            <th class="align-middle text-center">No</th>
+            <th class="align-middle text-center">Nama</th>
+            <th class="align-middle text-center">Username</th>
+            <th class="align-middle text-center">Email</th>
+            <th class="align-middle text-center">Password</th>
+            <th class="align-middle text-center">Aksi</th>
         </thead>
         <tbody>
             <?php foreach ($data_akun as $akun) :?>
             <tr>
-                <td><?= $akun["id_akun"];?></td>
-                <td><?= $akun["nama_akun"];?></td>
-                <td><?= $akun["username"];?></td>
-                <td><?= $akun["email"];?></td>
-                <td><?= $akun["password"];?></td>
-                <td>
+                <td class="text-center align-middle"><?= $akun["id_akun"];?></td>
+                <td class="text-center align-middle"><?= $akun["nama_akun"];?></td>
+                <td class="text-center align-middle"><?= $akun["username"];?></td>
+                <td class="text-center align-middle"><?= $akun["email"];?></td>
+                <td class="text-center align-middle"><?= $akun["password"];?></td>
+                <td class="text-center align-middle">
                     <button
                         type="button"
                         class="btn btn-success"

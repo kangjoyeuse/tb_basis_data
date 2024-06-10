@@ -11,7 +11,12 @@
 
     <script>
         $(document).ready(function() {
-            $('#table').DataTable();
+            $('#table').DataTable({
+                "columnDefs": [
+                    { "type": "num-fmt", "targets": [2, 3] } // Assuming the columns for Anggaran and Realisasi Anggaran are 2 and 3
+                ],
+                "order": [[2, "asc"]] // Default sorting on the Anggaran column in ascending order
+            });
         });
     </script>
     </body>
