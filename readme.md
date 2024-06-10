@@ -18,7 +18,7 @@ if (!isset($_SESSION['user_id'])) {
 
 ### To DO
 Penting
-- [] Backup dan Restore
+- [ ] Backup dan Restore
 - [x] Admin dan User
 - [ ] SQL lanjutan
 

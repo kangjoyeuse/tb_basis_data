@@ -54,6 +54,7 @@
     >
         Tambah
     </button>
+
     <table
         class="table table-striped table-bordered mt-4 text-center"
         id="table"
@@ -96,6 +97,19 @@
             <?php endforeach;?>
         </tbody>
     </table>
+
+        <h1>Backup and Restore Database</h1>
+        <form action="backup.php" method="post">
+            <button type="submit" name="backup" class="btn btn-primary">Backup Now</button>
+        </form>
+        <hr>
+        <form action="restore.php" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="restoreFile">Choose SQL file to restore:</label>
+                <input type="file" name="restoreFile" id="restoreFile" class="form-control-file">
+            </div>
+            <button type="submit" name="restore" class="btn btn-secondary">Restore</button>
+        </form>
 </main>
 
 <!-- Modal Tambah -->
