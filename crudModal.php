@@ -2,6 +2,7 @@
     $title = "Daftar Akun";
 
     include 'layout/header.php';
+    include "./config/auth.php";
 
     $data_akun = select("SELECT * FROM akun");
 

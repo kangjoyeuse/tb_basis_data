@@ -1,6 +1,10 @@
-<?php include 'layout/header.php';
+<?php
+
+include 'layout/header.php';
+include "./config/auth.php";
 
 $id_laporan = (int)$_GET["id_laporan"];
+
 
 $laporan = select("SELECT * FROM laporan WHERE id_laporan = $id_laporan")[0];
 

@@ -1,5 +1,6 @@
 <?php
     include 'layout/header.php';
+    include "./config/auth.php";
     $data_laporan = select("SELECT * FROM laporan");
 ?>
         <main class="container mt-5">
@@ -10,7 +11,6 @@
                     Tambah
                 </button>
             </div>
-
             <!-- Grafik -->
             <div class="row">
                 <div class="col-md-6">

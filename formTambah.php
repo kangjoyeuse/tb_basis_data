@@ -1,6 +1,7 @@
 
 
 <?php include 'layout/header.php';
+include "./config/auth.php";
 
 if (isset($_POST["submit"])) {
     if (create_laporan($_POST) > 0) {
