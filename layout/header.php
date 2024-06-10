@@ -1,5 +1,21 @@
-<?php
+<?php   
 include './config/app.php';
+
+// Menonaktifkan laporan kesalahan untuk pesan tertentu
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+$user_id = $_SESSION['user_id']; // Asumsi user_id disimpan di session saat login
+$query = "SELECT nama_akun, level FROM akun WHERE id_akun = ?";
+$stmt = $mysqli->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
 ?>
 
 <!DOCTYPE html>
@@ -59,12 +75,22 @@ include './config/app.php';
                                 href="./index.php"
                                 >Laporan</a
                             >
+                            <?php if ($user && $user['level'] == 1): ?>
                             <a href="crudModal.php" class="nav-link active">Akun</a>
+                            <?php endif; ?>
                             <a href="./logout.php" class="nav-link active"
                                 >Log Out</a
                             >
                             <!-- <a class="nav-link" href="#">Mahasiswa</a>
                             <a class="nav-link" href="#">Modal</a> -->
+                        </div>
+                        <div class="navbar-text ms-auto">
+                            <?php if ($user): ?>
+                                <span class="me-3">Hello, <?= $user['nama_akun']; ?>!</span>
+                                <span class="badge bg-<?= $user['level'] == 1 ? 'primary' : 'secondary'; ?>">
+                                    <?= $user['level'] == 1 ? 'Admin' : 'Operator'; ?>
+                                </span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

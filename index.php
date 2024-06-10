@@ -2,6 +2,9 @@
     include 'layout/header.php';
     include "./config/auth.php";
     $data_laporan = select("SELECT * FROM laporan");
+    $data_laporan_aggregate = select("SELECT COUNT(*) AS total_laporan, SUM(anggaran) AS total_anggaran FROM laporan");
+
+    
 ?>
         <main class="container mt-5">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -49,6 +52,25 @@
                     <?php endforeach;?>
                 </tbody>
             </table>
+
+            <!-- Tabel untuk Menampilkan Data Aggregate -->
+            <h2 class="mt-5">Data Aggregate</h2>
+            <table class="table table-striped table-bordered table-responsive text-center">
+                <thead>
+                    <tr>
+                        <th class="align-middle text-center">Total Laporan</th>
+                        <th class="align-middle text-center">Total Anggaran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($data_laporan_aggregate as $aggregate) : ?>
+                    <tr>
+                        <td class="text-center align-middle"><?= $aggregate["total_laporan"] ?></td>
+                        <td class="text-center align-middle"><?= 'Rp ' . number_format($aggregate["total_anggaran"], 2, ',', '.') ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </main>
 
 <!-- Modal Tambah -->
@@ -66,11 +88,11 @@
                     </div>
                     <div class="form-group mt-3">
                         <label for="anggaran">Anggaran</label>
-                        <input type="number" class="form-control" id="anggaran" name="anggaran" placeholder="Anggaran..." required />
+                        <input type="number" class="form-control" id="anggaran" name="anggaran" placeholder="Anggaran..."  required/>
                     </div>
                     <div class="form-group mt-3">
                         <label for="realisasi_anggaran">Realisasi Anggaran</label>
-                        <input type="number" class="form-control" id="realisasi_anggaran" name="realisasi_anggaran" placeholder="Realisasi Anggaran..." required />
+                        <input type="number" class="form-control" id="realisasi_anggaran" name="realisasi_anggaran" placeholder="Realisasi Anggaran..."  required/>
                     </div>
                     <div class="form-group mt-3">
                         <label for="keterangan">Keterangan</label>

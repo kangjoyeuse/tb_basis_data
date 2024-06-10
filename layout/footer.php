@@ -9,6 +9,12 @@
     <script type="text/javascript" src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script> 
 
+<div class="container">
+  <footer class="py-3 my-4">
+    <p class="text-center text-body-secondary">© 2024 Company, Inc</p>
+  </footer>
+</div>
+
     <script>
         $(document).ready(function() {
             $('#table').DataTable({

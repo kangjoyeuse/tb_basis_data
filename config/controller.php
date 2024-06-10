@@ -17,7 +17,8 @@ function create_laporan($post) {
   $nama_program = $post["nama_program"];
   $anggaran = $post["anggaran"];
   $realisasi_anggaran = $post["realisasi_anggaran"];
-  $rasio_realisasi_anggaran = $post["rasio_realisasi_anggaran"];
+  $rasio_realisasi_anggaran = ($realisasi_anggaran / $anggaran) * 100;
+  // $post["rasio_realisasi_anggaran"];
   $keterangan = $post["keterangan"];
 
   // Query tambah data
@@ -35,8 +36,9 @@ function ubah_laporan($post) {
   $id_laporan = $post["id_laporan"];
   $nama_program = $post["nama_program"];
   $anggaran = $post["anggaran"];
-  $realisasi_anggaran = $post["realisasi_anggaran"];
-  $rasio_realisasi_anggaran = $post["rasio_realisasi_anggaran"];
+  $realisasi_anggaran =$post["realisasi_anggaran"];
+  $rasio_realisasi_anggaran = ($realisasi_anggaran / $anggaran) * 100;
+  // $post["rasio_realisasi_anggaran"];
   $keterangan = $post["keterangan"];
 
   // Query ubah data
