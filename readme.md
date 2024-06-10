@@ -14,3 +14,13 @@ if (!isset($_SESSION['user_id'])) {
 
 ### Database
 - Buat database dengan nama tb_basis_data
+
+
+### To DO
+Penting
+- [ ] Backup dan Restore
+- [ ] Admin dan User
+- [ ] SQL lanjutan
+
+Tidak Penting
+- [ ] Dark mode
