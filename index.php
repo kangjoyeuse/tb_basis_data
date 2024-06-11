@@ -3,23 +3,25 @@
     include "./config/auth.php";
     $data_laporan = select("SELECT * FROM laporan");
     $data_laporan_aggregate = select("SELECT COUNT(*) AS total_laporan, SUM(anggaran) AS total_anggaran FROM laporan");
+    $data_laporan_view = select("SELECT * FROM laporan_view");
 
-    
 ?>
         <main class="container mt-5">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Daftar Laporan</h1>
                 <!-- Button to trigger modal -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formTambahModal">
-                    Tambah
-                </button>
+                    <span class="fas fa-plus"></span> Tambah
+                </button>                
             </div>
-            <!-- Grafik -->
-            <div class="row">
-                <div class="col-md-6">
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
+            <!-- Button to download CSV -->
+            <button type="button" class="btn btn-secondary" onclick="downloadCSV()">
+                <span class="fas fa-download"></span> Unduh CSV
+            </button>
+            <!-- Button to download Excel -->
+            <button type="button" class="btn btn-secondary" onclick="downloadExcel()">
+                <span class="fas fa-download"></span> Unduh Excel
+            </button>
             <table class="table table-striped table-bordered table-responsive text-center" id="table">
                 <thead>
                     <th class="align-middle text-center">No</th>
@@ -45,30 +47,12 @@
                             <td class="text-center align-middle"><?= date("d/m/y", strtotime($laporan["tanggal"]))?></td>
                             <td class="text-center align-middle" width="20%">
                                 <!-- <a href="./formUbah.php?id_laporan=<?= $laporan["id_laporan"]; ?>" class="btn btn-success btn-sm">Ubah</a> -->
-                                <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#formUbahModal<?= $laporan["id_laporan"]; ?>">Ubah</a>
-                                <a href="./formHapus.php?id_laporan=<?= $laporan["id_laporan"]; ?>" class="btn btn-danger btn-sm">Hapus</a>
+                                <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#formUbahModal<?= $laporan["id_laporan"]; ?>"><span class="fas fa-pen"></span> Ubah</a>
+                                <a href="./formHapus.php?id_laporan=<?= $laporan["id_laporan"]; ?>" class="btn btn-danger btn-sm"><span class="fas fa-delete-left"></span> Hapus</a>
                             </td>
                     </tr>
                     <?php endforeach;?>
-                </tbody>
-            </table>
-
-            <!-- Tabel untuk Menampilkan Data Aggregate -->
-            <h2 class="mt-5">Data Aggregate</h2>
-            <table class="table table-striped table-bordered table-responsive text-center">
-                <thead>
-                    <tr>
-                        <th class="align-middle text-center">Total Laporan</th>
-                        <th class="align-middle text-center">Total Anggaran</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($data_laporan_aggregate as $aggregate) : ?>
-                    <tr>
-                        <td class="text-center align-middle"><?= $aggregate["total_laporan"] ?></td>
-                        <td class="text-center align-middle"><?= 'Rp ' . number_format($aggregate["total_anggaran"], 2, ',', '.') ?></td>
-                    </tr>
-                    <?php endforeach; ?>
+                    
                 </tbody>
             </table>
         </main>
@@ -96,7 +80,11 @@
                     </div>
                     <div class="form-group mt-3">
                         <label for="keterangan">Keterangan</label>
-                        <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan..."></textarea>
+                        <select class="form-control" id="keterangan" name="keterangan" required>
+                            <option value="" selected>Pilih Keterangan...</option>
+                            <option value="" <?= $laporan["keterangan"] == "" ? "selected" : "" ?>>Tidak ada keterangan</option>
+                            <option value="Penginputan Data" <?= $laporan["keterangan"] == "Penginputan Data" ? "selected" : "" ?>>Penginputan Data</option>
+                        </select>
                     </div>
                     <div class="modal-footer">
                         <button
@@ -145,7 +133,13 @@
                     </div>
                     <div class="form-group mt-3">
                         <label for="keterangan">Keterangan</label>
-                        <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan..." required><?= $laporan["keterangan"]?></textarea>
+                        <select class="form-control" id="keterangan" name="keterangan" required>
+                            <option value="">Pilih Keterangan...</option>
+                            <option value="" <?= $laporan["keterangan"] == "" ? "selected" : "" ?>>Tidak ada keterangan</option>
+                            <option value="Perubahan Anggaran" <?= $laporan["keterangan"] == "Perubahan Anggaran" ? "selected" : "" ?>>Perubahan Anggaran</option>
+                            <option value="Perubahan Realisasi Anggaran" <?= $laporan["keterangan"] == "Perubahan Realisasi Anggaran" ? "selected" : "" ?>>Perubahan Realisasi Anggaran</option>
+                            <option value="Kesalahan Penginputan Data" <?= $laporan["keterangan"] == "Kesalahan Penginputan Data" ? "selected" : "" ?>>Kesalahan Penginputan Data</option>
+                        </select>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -158,35 +152,106 @@
 </div>
 <?php endforeach; ?>
 
-<!-- Script untuk Chart.js -->
 <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar', // Jenis grafik: bar, line, pie, dll.
-        data: {
-            labels: [<?php foreach ($data_laporan as $laporan) { echo '"' . $laporan["nama_program"] . '",'; } ?>],
-            datasets: [{
-                label: 'Anggaran',
-                data: [<?php foreach ($data_laporan as $laporan) { echo $laporan["anggaran"] . ','; } ?>],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }, {
-                label: 'Realisasi Anggaran',
-                data: [<?php foreach ($data_laporan as $laporan) { echo $laporan["realisasi_anggaran"] . ','; } ?>],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
+function downloadCSV() {
+    // Data laporan dari PHP
+    const dataLaporan = <?= json_encode($data_laporan) ?>;
+
+    // Membuat header CSV
+    const headers = ['No', 'Nama Program', 'Anggaran', 'Realisasi Anggaran', 'Rasio Realisasi Anggaran', 'Keterangan', 'Tanggal'];
+    let csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n";
+
+    // Menambahkan data laporan ke CSV
+    dataLaporan.forEach((laporan, index) => {
+        const row = [
+            index + 1,
+            laporan.nama_program,
+            laporan.anggaran,
+            laporan.realisasi_anggaran,
+            ((laporan.realisasi_anggaran / laporan.anggaran) * 100).toFixed(2) + '%',
+            laporan.keterangan,
+            new Date(laporan.tanggal).toLocaleDateString('id-ID')
+        ];
+        csvContent += row.join(",") + "\n";
     });
+
+    // Membuat link untuk mengunduh file CSV
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "data_laporan.csv");
+    document.body.appendChild(link);
+
+    // Klik link untuk mengunduh file
+    link.click();
+    document.body.removeChild(link);
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
+<script>
+function downloadCSV() {
+    // Data laporan dari PHP
+    const dataLaporan = <?= json_encode($data_laporan) ?>;
+
+    // Membuat header CSV
+    const headers = ['No', 'Nama Program', 'Anggaran', 'Realisasi Anggaran', 'Rasio Realisasi Anggaran', 'Keterangan', 'Tanggal'];
+    let csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n";
+
+    // Menambahkan data laporan ke CSV
+    dataLaporan.forEach((laporan, index) => {
+        const row = [
+            index + 1,
+            laporan.nama_program,
+            laporan.anggaran,
+            laporan.realisasi_anggaran,
+            ((laporan.realisasi_anggaran / laporan.anggaran) * 100).toFixed(2) + '%',
+            laporan.keterangan,
+            new Date(laporan.tanggal).toLocaleDateString('id-ID')
+        ];
+        csvContent += row.join(",") + "\n";
+    });
+
+    // Membuat link untuk mengunduh file CSV
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "data_laporan.csv");
+    document.body.appendChild(link);
+
+    // Klik link untuk mengunduh file
+    link.click();
+    document.body.removeChild(link);
+}
+
+function downloadExcel() {
+    // Data laporan dari PHP
+    const dataLaporan = <?= json_encode($data_laporan) ?>;
+
+    // Membuat header Excel
+    const headers = ['No', 'Nama Program', 'Anggaran', 'Realisasi Anggaran', 'Rasio Realisasi Anggaran', 'Keterangan', 'Tanggal'];
+    const data = dataLaporan.map((laporan, index) => [
+        index + 1,
+        laporan.nama_program,
+        laporan.anggaran,
+        laporan.realisasi_anggaran,
+        ((laporan.realisasi_anggaran / laporan.anggaran) * 100).toFixed(2) + '%',
+        laporan.keterangan,
+        new Date(laporan.tanggal).toLocaleDateString('id-ID')
+    ]);
+
+    // Gabungkan header dan data
+    const worksheetData = [headers, ...data];
+
+    // Buat worksheet dan workbook
+    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan");
+
+    // Unduh file Excel
+    XLSX.writeFile(workbook, "data_laporan.xlsx");
+}
 </script>
 
 <?php include 'layout/footer.php';?>

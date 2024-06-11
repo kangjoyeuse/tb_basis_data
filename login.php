@@ -31,14 +31,15 @@ if (isset($_POST['login'])) {
 
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
-  <head><script src="./assets/js/color-modes.js"></script>
+  <head>
+    <script src="./assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Signin Template · Bootstrap v5.3</title>
+    <title>Sign In</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
 
@@ -190,7 +191,8 @@ if (isset($_POST['login'])) {
     
 <main class="form-signin w-100 m-auto">
         <form method="POST" action="">
-            <h1 class="h3 mb-3 fw-normal text-center">Admin Login</h1>
+            <img src="./assets/brand/login.png" alt="Logo" class="mb-3 mx-auto d-block" style="width: 100px; height: 100px;">
+            <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
             <?php if (isset($error)): ?>
                 <div class="alert alert-danger text-center"><?= $error ?></div>
             <?php endif; ?>

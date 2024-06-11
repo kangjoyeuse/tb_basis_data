@@ -52,7 +52,7 @@
         data-bs-toggle="modal"
         data-bs-target="#modalTambah"
     >
-        Tambah
+        <span class="fas fa-plus"></span> Tambah
     </button>
 
     <table
@@ -82,7 +82,7 @@
                         data-bs-toggle="modal"
                         data-bs-target="#modalUbah<?= $akun["id_akun"]; ?>"
                     >
-                        Ubah
+                        <span class="fas fa-pen"></span> Ubah
                     </button>
                     <button
                         type="button"
@@ -90,7 +90,7 @@
                         data-bs-toggle="modal"
                         data-bs-target="#modalHapus<?= $akun["id_akun"]; ?>"
                     >
-                        Hapus
+                        <span class="fas fa-delete-left"></span> Hapus
                     </button>
                 </td>
             </tr>
